@@ -1,5 +1,6 @@
 # EPAgent Plugins for RHEL (1.0)
 
+# Description
 This is a series of plugins for monitoring both the OS and application processes (specifically WebSphere Application Server).
 
 rhelDiskStats.pl - gathers I/O statistics for mount points.  
@@ -7,6 +8,7 @@ rhelSar.pl - gathers per CPU/core statistics.
 rhelVmStat.pl - gathers memory and some CPU statistics.  
 psWASforLinux.pl - gathers usage statistics from WebSphere processes.  
 
+## Dependencies
 Tested with CA APM 9.7.1 EM, EPAgent 9.7.1, and Perl 5.22.
 
 ##Known Issues
