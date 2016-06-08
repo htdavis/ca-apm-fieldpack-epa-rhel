@@ -1,5 +1,6 @@
 # EPAgent Plugins for RHEL (1.0)
 
+# Description
 This is a series of plugins for monitoring both the OS and application processes (specifically WebSphere Application Server).
 
 rhelDiskStats.pl - gathers I/O statistics for mount points.  
@@ -7,6 +8,7 @@ rhelSar.pl - gathers per CPU/core statistics.
 rhelVmStat.pl - gathers memory and some CPU statistics.  
 psWASforLinux.pl - gathers usage statistics from WebSphere processes.  
 
+## Dependencies
 Tested with CA APM 9.7.1 EM, EPAgent 9.7.1, and Perl 5.22.
 
 ##Known Issues
@@ -26,7 +28,7 @@ Add stateless plugin entries to \<epa_home\>/IntroscopeEPAgent.properties.
 	introscope.epagent.stateless.DISKSTAT.command=perl <epa_home>/epaplugins/rhel/rhelDiskStats.pl
 	introscope.epagent.stateless.DISKSTAT.delayInSeconds=900
 	introscope.epagent.stateless.PSWAS.command=perl <epa_home>/epaplugins/rhel/psWASforLinux.pl
-	introscope.epagent.stateless.PSWAS.delayInSeconds=900
+	introscope.epagent.stateless.PSWAS.delayInSeconds=9003
 	introscope.epagent.stateless.SAR.command=perl <epa_home>/epaplugins/rhel/rhelSar.pl
 	introscope.epagent.stateless.SAR.delayInSeconds=900
 	introscope.epagent.stateless.VMSTAT.command=perl <epa_home>/epaplugins/rhel/rhelVmStat.pl
@@ -57,3 +59,12 @@ Changes for each version of the field pack.
 Version | Author | Comment
 --------|--------|--------
 1.0 | Hiko Davis | First bundled version of the field packs.
+
+## Support URL
+https://github.com/htdavis/ca-apm-fieldpack-epa-rhel
+
+## Short Description
+Monitor RHEL OS
+
+## Categories
+Server Monitoring
