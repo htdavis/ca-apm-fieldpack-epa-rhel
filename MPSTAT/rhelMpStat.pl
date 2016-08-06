@@ -13,7 +13,7 @@
 
 =head1 DESCRIPTION
 
- Pulls statistics about bindings
+ Pulls multi-processor statistics
 
  To see help information:
 

@@ -1,4 +1,4 @@
-# EPAgent Plugins for RHEL (1.0)
+# EPAgent Plugins for RHEL (1.1)
 
 This is a series of plugins for monitoring both the OS and application processes (specifically WebSphere Application Server).
 
