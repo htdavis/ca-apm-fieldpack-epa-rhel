@@ -6,6 +6,7 @@ rhelDiskStats.pl - gathers I/O statistics for mount points.
 rhelSar.pl - gathers per CPU/core statistics.  
 rhelVmStat.pl - gathers memory and some CPU statistics.  
 psWASforLinux.pl - gathers usage statistics from WebSphere processes.  
+rhelMpStat.pl - gathers per-processor statistics  
 
 Tested with CA APM 9.7.1 EM, EPAgent 9.7.1, and Perl 5.22.
 
@@ -22,15 +23,17 @@ Follow the instructions in the EPAgent guide to setup the agent.
 
 Add stateless plugin entries to \<epa_home\>/IntroscopeEPAgent.properties.
 
-	introscope.epagent.plugins.stateless.names=DISKSTAT,SAR,PSWAS,VMSTAT (can be appended to a previous entry)
-	introscope.epagent.stateless.DISKSTAT.command=perl <epa_home>/epaplugins/rhel/rhelDiskStats.pl
-	introscope.epagent.stateless.DISKSTAT.delayInSeconds=900
-	introscope.epagent.stateless.PSWAS.command=perl <epa_home>/epaplugins/rhel/psWASforLinux.pl
-	introscope.epagent.stateless.PSWAS.delayInSeconds=900
-	introscope.epagent.stateless.SAR.command=perl <epa_home>/epaplugins/rhel/rhelSar.pl
-	introscope.epagent.stateless.SAR.delayInSeconds=900
-	introscope.epagent.stateless.VMSTAT.command=perl <epa_home>/epaplugins/rhel/rhelVmStat.pl
-	introscope.epagent.stateless.VMSTAT.delayInSeconds=900
+    introscope.epagent.plugins.stateless.names=DISKSTAT,SAR,PSWAS,VMSTAT,MPSTAT (can be appended to a previous entry)
+    introscope.epagent.stateless.DISKSTAT.command=perl <epa_home>/epaplugins/rhel/rhelDiskStats.pl
+    introscope.epagent.stateless.DISKSTAT.delayInSeconds=900
+    introscope.epagent.stateless.PSWAS.command=perl <epa_home>/epaplugins/rhel/psWASforLinux.pl
+    introscope.epagent.stateless.PSWAS.delayInSeconds=900
+    introscope.epagent.stateless.SAR.command=perl <epa_home>/epaplugins/rhel/rhelSar.pl
+    introscope.epagent.stateless.SAR.delayInSeconds=900
+    introscope.epagent.stateless.VMSTAT.command=perl <epa_home>/epaplugins/rhel/rhelVmStat.pl
+    introscope.epagent.stateless.VMSTAT.delayInSeconds=900
+    introscope.epagent.stateless.MPSTAT.command=perl <epa_home>/epaplugins/rhel/rhelMpStat.pl
+    introscope.epagent.stateless.MPSTAT.delayInSeconds=900
 
 # Usage Instructions
 No special instructions needed for DiskStats, SAR, and VMSTAT.
@@ -57,3 +60,4 @@ Changes for each version of the field pack.
 Version | Author | Comment
 --------|--------|--------
 1.0 | Hiko Davis | First bundled version of the field packs.
+1.1 | Hiko Davis | Added MPSTAT plugin.
