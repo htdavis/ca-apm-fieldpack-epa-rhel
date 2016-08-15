@@ -1,4 +1,4 @@
-# EPAgent Plugins for RHEL (1.1)
+# EPAgent Plugins for RHEL (1.2)
 
 This is a series of plugins for monitoring both the OS and application processes (specifically WebSphere Application Server).
 
@@ -36,7 +36,7 @@ Add stateless plugin entries to \<epa_home\>/IntroscopeEPAgent.properties.
     introscope.epagent.stateless.MPSTAT.delayInSeconds=900
 
 # Usage Instructions
-No special instructions needed for DiskStats, SAR, and VMSTAT.
+No special instructions needed for DiskStats, SAR, MPSTAT, and VMSTAT.
 
 PSWAS requires that you know the tab location of the WAS application name in the 'ps' output. It is recommended that you speak with your WAS administrator about standardizing the location of that property to ensure consistent results. Adjust the value of '$psCommand' at line 19 of the program.
 
@@ -61,3 +61,4 @@ Version | Author | Comment
 --------|--------|--------
 1.0 | Hiko Davis | First bundled version of the field packs.
 1.1 | Hiko Davis | Added MPSTAT plugin.
+1.2 | Hiko Davis | Updated rhelDiskStats.pl to handle blank line in iostat output.
