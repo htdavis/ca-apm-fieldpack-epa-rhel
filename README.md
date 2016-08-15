@@ -8,7 +8,7 @@ rhelVmStat.pl - gathers memory and some CPU statistics.
 psWASforLinux.pl - gathers usage statistics from WebSphere processes.  
 rhelMpStat.pl - gathers per-processor statistics  
 
-Tested with CA APM 9.7.1 EM, EPAgent 9.7.1, and Perl 5.22.
+Tested with CA APM 9.7.1 EM, EPAgent 9.7.1, RHEL 6.x, and Perl 5.22.
 
 ##Known Issues
 There have been discussions about the reporting of CPU statistics when running on System z | z/Linux. We are currently looking into alternatives to getting this information for your use.

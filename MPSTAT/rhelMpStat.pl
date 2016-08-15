@@ -84,7 +84,7 @@ SAMPLE
 } else {
     # gather stats from server
     $mpstatCommand = 'mpstat -P ALL';
-    @mpstatResults = `mpstatCommand`;
+    @mpstatResults = `$mpstatCommand`;
 }
 
 
