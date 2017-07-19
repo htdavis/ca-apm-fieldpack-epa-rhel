@@ -25,13 +25,13 @@ Follow the instructions in the EPAgent guide to setup the agent.
 Add stateless plugin entries to \<epa_home\>/IntroscopeEPAgent.properties.
 
 	introscope.epagent.plugins.stateless.names=DISKSTAT,SAR,PSWAS,VMSTAT (can be appended to a previous entry)
-	introscope.epagent.stateless.DISKSTAT.command=perl <epa_home>/epaplugins/rhel/rhelDiskStats.pl
+	introscope.epagent.stateless.DISKSTAT.command=perl <epa_home>/epaplugins/DISKSTAT/rhelDiskStats.pl
 	introscope.epagent.stateless.DISKSTAT.delayInSeconds=900
-	introscope.epagent.stateless.PSWAS.command=perl <epa_home>/epaplugins/rhel/psWASforLinux.pl
-	introscope.epagent.stateless.PSWAS.delayInSeconds=9003
-	introscope.epagent.stateless.SAR.command=perl <epa_home>/epaplugins/rhel/rhelSar.pl
+	introscope.epagent.stateless.PSWAS.command=perl <epa_home>/epaplugins/PSWAS/psWASforLinux.pl
+	introscope.epagent.stateless.PSWAS.delayInSeconds=900
+	introscope.epagent.stateless.SAR.command=perl <epa_home>/epaplugins/SAR/rhelSar.pl
 	introscope.epagent.stateless.SAR.delayInSeconds=900
-	introscope.epagent.stateless.VMSTAT.command=perl <epa_home>/epaplugins/rhel/rhelVmStat.pl
+	introscope.epagent.stateless.VMSTAT.command=perl <epa_home>/epaplugins/VMSTAT/rhelVmStat.pl
 	introscope.epagent.stateless.VMSTAT.delayInSeconds=900
 
 # Usage Instructions
