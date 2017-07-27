@@ -1,4 +1,4 @@
-# EPAgent Plugins for RHEL (1.5)
+# EPAgent Plugins for RHEL
 
 The EPAgent Plug-ins for RHEL is a set of plug-ins for monitoring the Red Hat Enterprise Linux operating system and application processes (specifically IBM WebSphere Application Server).
 
@@ -25,7 +25,7 @@ Find the version 9.6 to 10.x documentation on [the CA APM documentation wiki.](h
 # Install and Configure EPA Plug-ins for RHEL
 
 1. Extract the plug-ins to \<*EPAgent_Home*\>/epaplugins.
-2. Configure the IntroscopeEPAgent.properties file in \<*EPAgent_Home*\> by adding these stateless plug-in properties.
+2. Configure the IntroscopeEPAgent.properties file in \<*EPAgent_Home*\> by adding these stateless plug-in properties:
 
     introscope.epagent.plugins.stateless.names=DISKSTAT,SAR,PSWAS,VMSTAT,MPSTAT (can be appended to a previous entry)  
     introscope.epagent.stateless.DISKSTAT.command=perl <epa_home>/epaplugins/rhel/rhelDiskStats.pl  
@@ -67,6 +67,7 @@ Version | Author | Comment
 1.3 | Hiko Davis | rhelDiskStats, rhelMpStat, rhelVmStat (non-numeric values); rhelSar (typo line 114);  and placement of program under epaplugins.
 1.4 | Hiko Davis | fixed README format issue; updated rhelDiskStats to handle large volume sizes.
 1.5 | Hiko Davis | Updated README for marketplace.
+1.6 | Hiko Davis | Updated README for marketplace.
 
 ## Support URL
 [https://github.com/htdavis/ca-apm-fieldpack-epa-rhel](https://github.com/htdavis/ca-apm-fieldpack-epa-rhel)
