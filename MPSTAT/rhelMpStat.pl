@@ -1,4 +1,4 @@
-#!/bin/perl
+#!/usr/bin/perl
 =head1 NAME
 
  rhelMpStat.pl
@@ -29,24 +29,31 @@
 
  NONE
 
+=head1 ISSUE TRACKING
+
+ Submit any bugs/enhancements to: https://github.com/htdavis/ca-apm-fieldpack-epa-rhel/issues
+
 =head1 AUTHOR
 
- Hiko Davis, Principal Services Consultant, CA Technologies
+ Hiko Davis, Sr Engineering Services Architect, CA Technologies
 
 =head1 COPYRIGHT
 
- Copyright (c) 2016
+ Copyright (c) 2017
 
  This plug-in is provided AS-IS, with no warranties, so please test thoroughly!
 
 =cut
 
+use strict;
+use warnings;
+
 use FindBin;
-use lib ("$FindBin::Bin", "$FindBin::Bin/lib/perl", "$FindBin::Bin/../lib/perl");
+use lib ("$FindBin::Bin", "$FindBin::Bin/lib/perl", "$FindBin::Bin/../lib/perl", "$FindBin::Bin/../../lib/perl");
 use Wily::PrintMetric;
 
 use Getopt::Long;
-use strict;
+use Scalar::Util qw(looks_like_number);
 
 =head2 SUBROUTINES
 
@@ -59,7 +66,7 @@ use strict;
 =cut
 sub usage {
     print "Unknown option: @_\n" if ( @_ );
-    print "usage: $0 <epa_home>/epaplugins/rhel/rhelMpStat.pl[--help|-?] [--debug]\n\n";
+    print "usage: $0 <epa_home>/epaplugins/rhel/rhelMpStat.pl [--help|-?] [--debug]\n\n";
     exit;
 }
 
@@ -100,9 +107,12 @@ foreach my $isline (@mpstatResults) {
     $isline =~ s/^\s+//;
 	my @cpuStats = split(/\s+/, $isline);
 	my $cpu = $cpuStats[2];
-	# prepend a zero to CPUs 1-9
-	if ( int($cpu) >= 1 && int($cpu) <= 9 ) {
-	    $cpu = "0". $cpu;
+	# check if the value is numeric before prepending operation
+	if (looks_like_number($cpu)) {
+	    # prepend a zero to CPUs 1-9
+	    if ( int($cpu) >= 1 && int($cpu) <= 9 ) {
+            $cpu = "0". $cpu;
+        }
 	}
 	
 	# report mpstats

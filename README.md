@@ -1,4 +1,4 @@
-# EPAgent Plugins for RHEL (1.2)
+# EPAgent Plugins for RHEL (1.3)
 
 This is a series of plugins for monitoring both the OS and application processes (specifically WebSphere Application Server).
 
@@ -8,7 +8,7 @@ rhelVmStat.pl - gathers memory and some CPU statistics.
 psWASforLinux.pl - gathers usage statistics from WebSphere processes.  
 rhelMpStat.pl - gathers per-processor statistics  
 
-Tested with CA APM 9.7.1 EM, EPAgent 9.7.1, RHEL 6.x, and Perl 5.22.
+Tested with CA APM 9.7.1/10.5.2 EM, EPAgent 9.7.1/10.5.2, RHEL 6.x/7.3, and Perl 5.16/5.22.
 
 ##Known Issues
 There have been discussions about the reporting of CPU statistics when running on System z | z/Linux. We are currently looking into alternatives to getting this information for your use.
@@ -62,3 +62,4 @@ Version | Author | Comment
 1.0 | Hiko Davis | First bundled version of the field packs.
 1.1 | Hiko Davis | Added MPSTAT plugin.
 1.2 | Hiko Davis | Updated rhelDiskStats.pl to handle blank line in iostat output.
+1.3 | Hiko Davis | rhelDiskStats, rhelMpStat, rhelVmStat (non-numeric values); rhelSar (typo line 114);  and placement of program under epaplugins.

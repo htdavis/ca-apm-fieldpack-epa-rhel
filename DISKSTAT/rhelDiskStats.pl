@@ -32,13 +32,17 @@
  I've noticed a weird bug when attempting to filter on only root filesystem "/".
  I don't think you'll ever want to do this, but just know that it doesn't work.
 
+=head1 ISSUE TRACKING
+
+ Submit any bugs/enhancements to: https://github.com/htdavis/ca-apm-fieldpack-epa-rhel/issues
+
 =head1 AUTHOR
 
- Hiko Davis, Principal Services Consultant, CA Technologies
+ Hiko Davis, Sr Engineering Service Architect, CA Technologies
 
 =head1 COPYRIGHT
 
- Copyright (c) 2011-2014
+ Copyright (c) 2011-2017
 
  This plug-in is provided AS-IS, with no warranties, so please test thoroughly!
 
@@ -48,7 +52,7 @@ use strict;
 use warnings;
 
 use FindBin;
-use lib ("$FindBin::Bin", "$FindBin::Bin/lib/perl", "$FindBin::Bin/../lib/perl");
+use lib ("$FindBin::Bin", "$FindBin::Bin/lib/perl", "$FindBin::Bin/../lib/perl", "$FindBin::Bin/../../lib/perl");
 use Wily::PrintMetric;
 
 use Getopt::Long;
@@ -120,7 +124,7 @@ Filesystem            Inodes   IUsed   IFree IUse% Mounted on
 /dev/mapper/VolGroup00-lv_opt
                      1048576  127869  920707   13% /opt
 /dev/mapper/VolGroup00-lv_var
-                      524288    1565  522723    1% /var
+                           0       0       0     - /var
 /dev/mapper/VolGroup00-lv_home
                       532576    8644  523932    2% /home
 /dev/mapper/VolGroup00-lv_usr
@@ -261,6 +265,7 @@ for my $i ( 1..$#inodesResults ) {
     my @inStats = split (/\s+/, $inodesResults[$i]);
     my $fsName = $inStats[0];
     my $diskName = $inStats[5];
+    my $pctUse = $inStats[4];
 
     # if line is just the filesystem, hold until next loop
     if ( not defined $diskName ) {
@@ -272,14 +277,15 @@ for my $i ( 1..$#inodesResults ) {
     # check to see if the user specified this disk on the command line
     next if $diskName !~ /$mountedDisksRegEx/i;
 
+    # if IUsed is 0, set pctUse to 0; use chop to get rid of '%' symbol
+    if ( int($inStats[2]) == 0 ) { $pctUse = 0; } else { chop $pctUse; }
+    
     # report the inodes stats
-    # chop gets rid of '%' in the percentage metric
-    chop $inStats[4];
     Wily::PrintMetric::printMetric( type        => 'IntCounter',
                                     resource    => 'Disk',
                                     subresource => $diskName,
                                     name        => 'IUse (%)',
-                                    value       => $inStats[4],
+                                    value       => $pctUse,
                                   );
     Wily::PrintMetric::printMetric( type        => 'IntCounter',
                                     resource    => 'Disk',
