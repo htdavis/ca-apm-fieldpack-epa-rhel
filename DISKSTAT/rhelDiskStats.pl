@@ -216,25 +216,25 @@ for my $i ( 1..$#dfResults ) {
     # report the df stats
     # chop gets rid of '%' in the capacity metric
     chop $dfStats[4];
-    Wily::PrintMetric::printMetric( type        => 'IntCounter',
+    Wily::PrintMetric::printMetric( type        => 'LongCounter',
                                     resource    => 'Disk',
                                     subresource => $diskName,
                                     name        => 'Used Disk Space (%)',
                                     value       => $dfStats[4],
                                   );
-    Wily::PrintMetric::printMetric( type        => 'IntCounter',
+    Wily::PrintMetric::printMetric( type        => 'LongCounter',
                                     resource    => 'Disk',
                                     subresource => $diskName,
                                     name        => 'Free Disk Space (MB)',
                                     value       => int ($dfStats[3] / 1024),
                                   );
-    Wily::PrintMetric::printMetric( type        => 'IntCounter',
+    Wily::PrintMetric::printMetric( type        => 'LongCounter',
                                     resource    => 'Disk',
                                     subresource => $diskName,
                                     name        => 'Used Disk Space (MB)',
                                     value       => int ($dfStats[2] / 1024),
                                   );
-    Wily::PrintMetric::printMetric( type        => 'IntCounter',
+    Wily::PrintMetric::printMetric( type        => 'LongCounter',
                                     resource    => 'Disk',
                                     subresource => $diskName,
                                     name        => 'Total Disk Space (MB)',
