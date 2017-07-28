@@ -1,6 +1,7 @@
 # EPAgent Plugins for RHEL
 
-The EPAgent Plug-ins for RHEL is a set of plug-ins for monitoring the Red Hat Enterprise Linux operating system and application processes (specifically IBM WebSphere Application Server).
+# Description
+The EPAgent Plug-ins for RHEL is a set of plug-ins for monitoring the Red Hat Enterprise Linux operating system and application processes (specifically IBM WebSphere Application Server)
 
 rhelDiskStats.pl - gathers I/O statistics for mount points.  
 rhelSar.pl - gathers per CPU/core statistics.  
@@ -61,13 +62,15 @@ Changes for each version of the field pack.
 
 Version | Author | Comment
 --------|--------|--------
-1.0 | Hiko Davis | First bundled version of the field packs.
 1.1 | Hiko Davis | Added MPSTAT plugin.
 1.2 | Hiko Davis | Updated rhelDiskStats.pl to handle blank line in iostat output.
 1.3 | Hiko Davis | rhelDiskStats, rhelMpStat, rhelVmStat (non-numeric values); rhelSar (typo line 114);  and placement of program under epaplugins.
 1.4 | Hiko Davis | fixed README format issue; updated rhelDiskStats to handle large volume sizes.
 1.5 | Hiko Davis | Updated README for marketplace.
 1.6 | Hiko Davis | Updated README for marketplace.
+
+## Support URL
+https://github.com/htdavis/ca-apm-fieldpack-epa-rhel
 
 ## Support URL
 [https://github.com/htdavis/ca-apm-fieldpack-epa-rhel](https://github.com/htdavis/ca-apm-fieldpack-epa-rhel)
