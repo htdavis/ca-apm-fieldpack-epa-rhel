@@ -1,5 +1,4 @@
-#!/bin/perl
-
+#!/usr/bin/perl
 =head1 NAME
 
  rhelSar.pl
@@ -16,7 +15,7 @@
 
  Pulls stats from commandline tool 'sar'
  Stats will be displayed per CPU/Core
- Stats are actually floating point values, so all values have been multiplied by 100
+ Stats are actually floating point values, so all values are rounded up or down
 
  To see help information:
 
@@ -27,10 +26,18 @@
  To test against sample output, use the DEBUG flag:
 
  perl <epa_home>/epaplugins/rhel/rhelSar.pl --debug
+ 
+=head1 CAVEATS
+
+ None
+
+=head1 ISSUE TRACKING
+
+ Submit any bugs/enhancements to: https://github.com/htdavis/ca-apm-fieldpack-epa-rhel/issues
 
 =head1 AUTHOR
 
- Hiko Davis, Principal Services Consultant, CA Technologies
+ Hiko Davis, Sr Engineering Services Architect, CA Technologies
 
 =head1 COPYRIGHT
 
@@ -40,16 +47,14 @@
 
 =cut
 
-use FindBin;
-use lib ("$FindBin::Bin", "$FindBin::Bin/lib/perl", "$FindBin::Bin/../lib/perl");
-use Wily::PrintMetric;
-
 use strict;
 use warnings;
 
+use FindBin;
+use lib ("$FindBin::Bin", "$FindBin::Bin/lib/perl", "$FindBin::Bin/../lib/perl", "$FindBin::Bin/../../lib/perl");
+use Wily::PrintMetric;
+
 use Getopt::Long;
-use File::Spec;
-use Cwd qw(abs_path);
 
 
 sub usage {
@@ -64,28 +69,31 @@ my ($sarCommand, @sarResults);
 
 my ($help, $debug);
 # get commandline parameters or display help
-usage () if ( @ARGV < 1 or
-    ! GetOptions( 'help|?'  =>  \$help,
-                  'debug!'  =>  \$debug,
-                )
-    or defined $help );
+&usage if ( not GetOptions( 'help|?' => \$help,
+                            'debug!' => \$debug,
+                          )
+            or defined $help );
 
 # run debug if called; else execute 'sar'
 if ( $debug ) {
-    @sarResults = do { open my $fh, '<', File::Spec->catfile(abs_path, "epaplugins", "rhel", "samples", "sar_out"); <$fh>; };
+    @sarResults = << "EOF" =~ m/(^.*\n)/mg;
+Average:        all      0.03      0.00      0.04      0.01      0.00     99.93
+Average:          0      0.03      0.00      0.03      0.00      0.00     99.93
+Average:          1      0.04      0.00      0.05      0.01      0.00     99.89
+Average:          2      0.02      0.00      0.03      0.01      0.00     99.94
+Average:          3      0.03      0.00      0.02      0.00      0.00     99.94
+EOF
 } else {
-    $sarCommand = "sar -P ALL";
+    $sarCommand = "sar -P ALL | grep Average";
     # execute command; place results into array
     @sarResults = `$sarCommand`;
 }
 
 
-# skip 5 lines; iterate through sarResults
-for my $i ( 5..$#sarResults ) {
+# skip 3 lines; iterate through sarResults
+for my $i ( 0..$#sarResults ) {
     # remove trailing newline
     chomp $sarResults[$i];
-    # check for blank line & skip
-    if ($sarResults[$i] =~ /^$/) { next; }
     # split on space " "
     my @sarData = split(/\s+/, $sarResults[$i]);
     # check metrics are averages or not
@@ -96,76 +104,38 @@ for my $i ( 5..$#sarResults ) {
         Wily::PrintMetric::printMetric( type        => 'IntCounter',
                                         resource    => 'rhelSAR',
                                         subresource => 'CPU ' . $sarData[1],
-                                        name        => 'Avg %user (100x)',
-                                        value       => int($sarData[2] * 100),
+                                        name        => 'Avg %user',
+                                        value       => sprintf("%.0f", $sarData[2]),
                                       );
         Wily::PrintMetric::printMetric( type        => 'IntCounter',
                                         resource    => 'rhelSAR',
                                         subresource => 'CPU ' . $sarData[1],
-                                        name        => 'Avg %nice (100x)',
-                                        value       => int($sarData[3] * 100),
+                                        name        => 'Avg %nice',
+                                        value       => sprintf("%.0f", $sarData[3]),
                                       );
         Wily::PrintMetric::printMetric( type        => 'IntCounter',
                                         resource    => 'rhelSAR',
                                         subresource => 'CPU ' . $sarData[1],
-                                        name        => 'Avg %system (100x)',
-                                        value       => int($sarData[4] * 100),
+                                        name        => 'Avg %system',
+                                        value       => sprintf("%.0f", $sarData[4]),
                                       );
         Wily::PrintMetric::printMetric( type        => 'IntCounter',
                                         resource    => 'rhelSAR',
                                         subresource => 'CPU ' . $sarData[1],
-                                        name        => 'Avg %iowait (100x)',
-                                        value       => int($sarData[5] * 100),
+                                        name        => 'Avg %iowait',
+                                        value       => sprintf("%.0f", $sarData[5]),
                                       );
         Wily::PrintMetric::printMetric( type        => 'IntCounter',
                                         resource    => 'rhelSAR',
                                         subresource => 'CPU ' . $sarData[1],
-                                        name        => 'Avg %steal (100x)',
-                                        value       => int($sarData[6] * 100),
+                                        name        => 'Avg %steal',
+                                        value       => sprintf("%.0f", $sarData[6]),
                                       );
         Wily::PrintMetric::printMetric( type        => 'IntCounter',
                                         resource    => 'rhelSAR',
                                         subresource => 'CPU ' . $sarData[1],
-                                        name        => 'Avg %idle (100x)',
-                                        value       => int($sarData[7] * 100),
-                                      );
-    } else {
-        # return results
-        Wily::PrintMetric::printMetric( type        => 'IntCounter',
-                                        resource    => 'rhelSAR',
-                                        subresource => 'CPU ' . $sarData[2],
-                                        name        => '%user (100x)',
-                                        value       => int($sarData[3] * 100),
-                                      );
-        Wily::PrintMetric::printMetric( type        => 'IntCounter',
-                                        resource    => 'rhelSAR',
-                                        subresource => 'CPU ' . $sarData[2],
-                                        name        => '%nice (100x)',
-                                        value       => int($sarData[4] * 100),
-                                      );
-        Wily::PrintMetric::printMetric( type        => 'IntCounter',
-                                        resource    => 'rhelSAR',
-                                        subresource => 'CPU ' . $sarData[2],
-                                        name        => '%system (100x)',
-                                        value       => int($sarData[5] * 100),
-                                      );
-        Wily::PrintMetric::printMetric( type        => 'IntCounter',
-                                        resource    => 'rhelSAR',
-                                        subresource => 'CPU ' . $sarData[2],
-                                        name        => '%iowait (100x)',
-                                        value       => int($sarData[6] * 100),
-                                      );
-        Wily::PrintMetric::printMetric( type        => 'IntCounter',
-                                        resource    => 'rhelSAR',
-                                        subresource => 'CPU ' . $sarData[2],
-                                        name        => '%steal (100x)',
-                                        value       => int($sarData[7] * 100),
-                                      );
-        Wily::PrintMetric::printMetric( type        => 'IntCounter',
-                                        resource    => 'rhelSAR',
-                                        subresource => 'CPU ' . $sarData[2],
-                                        name        => '%idle (100x)',
-                                        value       => int($sarData[8] * 100),
+                                        name        => 'Avg %idle',
+                                        value       => sprintf("%.0f", $sarData[7]),
                                       );
     }
 }
